@@ -70,7 +70,6 @@ export default function Page() {
   });
   const [isAddBadgeModalOpen, setIsAddBadgeModalOpen] = useState(false);
   const [isAssignBadgeModalOpen, setIsAssignBadgeModalOpen] = useState(false);
-  const [selectedBadgeId, setSelectedBadgeId] = useState<number | null>(null);
 
   const handleAddBadge = () => {
     const newBadgeWithId: Badge = {
@@ -88,13 +87,12 @@ export default function Page() {
 
   const closeAssignBadge = () => {
     setIsAssignBadgeModalOpen(false);
-    setSelectedBadgeId(null);
   };
 
   return (
-    <Card className="container mx-auto mt-5 w-full max-w-4xl p-4">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Badge Management Dashboard</h1>
+    <Card className="container mx-auto mt-10 w-full max-w-4xl p-4">
+      <div className="mb-10 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Badge Management Dashboard</h1>
         <Dialog
           open={isAddBadgeModalOpen}
           onOpenChange={setIsAddBadgeModalOpen}
@@ -196,6 +194,19 @@ export default function Page() {
               </TableCell>
               <TableCell>
                 <div className="flex space-x-2">
+                  <div>
+                    <Button
+                      variant="default"
+                      size="icon"
+                      onClick={() => {
+                        setIsAssignBadgeModalOpen(true);
+                      }}
+                    >
+                      <Users className="h-4 w-4" />
+                      <span className="sr-only">Assign</span>
+                    </Button>
+                  </div>
+
                   <Button
                     variant="destructive"
                     size="icon"
@@ -205,19 +216,6 @@ export default function Page() {
                     <span className="sr-only">Delete</span>
                   </Button>
 
-                  <div>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => {
-                        setSelectedBadgeId(badge.id);
-                        setIsAssignBadgeModalOpen(true);
-                      }}
-                    >
-                      <Users className="h-4 w-4" />
-                      <span className="sr-only">Assign</span>
-                    </Button>
-                  </div>
                   <Dialog
                     open={isAssignBadgeModalOpen}
                     onOpenChange={setIsAssignBadgeModalOpen}
