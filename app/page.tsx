@@ -24,6 +24,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Trash2, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type Badge = {
   id: number;
@@ -153,11 +154,12 @@ export default function Page() {
               </div>
               {newBadge.image && (
                 <div className="mt-4">
-                  <img
-                    src={newBadge.image}
-                    alt="Badge Preview"
-                    className="h-24 w-24 object-contain"
-                  />
+                  <Avatar className="h-24 w-24">
+                    <AvatarImage src={newBadge.image} alt="Badge Preview" />
+                    <AvatarFallback>
+                      {newBadge?.name?.[0]?.toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
               )}
               <Button onClick={handleAddBadge} className="w-full">
@@ -182,11 +184,10 @@ export default function Page() {
           {badges.map((badge) => (
             <TableRow key={badge.id}>
               <TableCell>
-                <img
-                  src={badge.image}
-                  alt={badge.name}
-                  className="h-10 w-10 object-contain"
-                />
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={badge.image} alt="Badge Preview" />
+                  <AvatarFallback>{badge.name[0].toUpperCase()}</AvatarFallback>
+                </Avatar>
               </TableCell>
               <TableCell>{badge.name}</TableCell>
               <TableCell>{badge.description}</TableCell>
