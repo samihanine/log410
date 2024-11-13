@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import ThemeProvider from '@/components/ThemeToggle/theme-provider';
 import ThemeToggle from '@/components/ThemeToggle/theme-toggle';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
   title: 'LOG410',
@@ -52,7 +53,7 @@ export default async function RootLayout({
           <div className="h-16 border-b border-border bg-card text-foreground">
             <div className="mx-auto flex h-full w-full max-w-4xl items-center justify-between px-4">
               <div>
-                <h1 className="text-2xl font-bold">LOG410</h1>
+                <h1 className="text-2xl font-bold">CODÉ</h1>
               </div>
 
               <div className="flex items-center justify-center gap-8">
@@ -71,6 +72,7 @@ export default async function RootLayout({
               </div>
 
               <div className="flex items-center gap-4">
+                <Badge variant="warning">Administrator</Badge>
                 <ThemeToggle />
                 <Select value="EN">
                   <SelectTrigger className="flex-1">
