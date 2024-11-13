@@ -151,8 +151,26 @@ export default function Page() {
                     <SelectItem value="TestDate1Year">
                       <span>TestDate1Year</span>
                     </SelectItem>
-                    <SelectItem value="TestDate2Year">
-                      <span>TestDate2Year</span>
+                    <SelectItem value="TestDateYear2">
+                      <span>TestDateYear2</span>
+                    </SelectItem>
+                    <SelectItem value="TestDateYear3">
+                      <span>TestDateYear3</span>
+                    </SelectItem>
+                    <SelectItem value="NombrePrimesComplétées1">
+                      <span>NombrePrimesComplétées1</span>
+                    </SelectItem>
+                    <SelectItem value="NombrePrimesComplétées10">
+                      <span>NombrePrimesComplétées10</span>
+                    </SelectItem>
+                    <SelectItem value="NombrePrimesComplétées50">
+                      <span>NombrePrimesComplétées50</span>
+                    </SelectItem>
+                    <SelectItem value="NiveauAtteint5">
+                      <span>NiveauAtteint5</span>
+                    </SelectItem>
+                    <SelectItem value="NiveauAtteint10">
+                      <span>NiveauAtteint10</span>
                     </SelectItem>
                   </SelectContent>
                 </Select>
