@@ -22,7 +22,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Trash2, Users } from 'lucide-react';
+import { Edit, Plus, Trash2, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -73,12 +73,32 @@ export default function Page() {
     { id: 5, name: 'Charlie Brown', bagdes: [2] }
   ]);
 
-  const [newBadge, setNewBadge] = useState<Omit<Badge, 'id' | 'usersCount'>>({
+  const [newBadge, setNewBadge] = useState<Badge>({
     name: '',
     description: '',
     image: '',
-    rule: 'TestDate1Year'
+    rule: 'TestDate1Year',
+    id: badges.length + 1
   });
+  const [editBadge, setEditBadge] = useState(false);
+
+  const openEditBadgeModal = (badge: Badge) => {
+    setNewBadge(badge);
+    setEditBadge(true);
+    setIsAddBadgeModalOpen(true);
+  };
+
+  const handleEditBadge = () => {
+    const updatedBadges = badges.map((b) => {
+      if (b.id === newBadge?.id) {
+        return { ...newBadge };
+      }
+      return b;
+    });
+    setBadges([...updatedBadges]);
+    setIsAddBadgeModalOpen(false);
+  };
+
   const [isAddBadgeModalOpen, setIsAddBadgeModalOpen] = useState(false);
   const [isAssignBadgeModalOpen, setIsAssignBadgeModalOpen] = useState(false);
 
@@ -88,7 +108,6 @@ export default function Page() {
       id: badges.length + 1
     };
     setBadges([...badges, newBadgeWithId]);
-    setNewBadge({ name: '', description: '', image: '', rule: '' });
     setIsAddBadgeModalOpen(false);
   };
 
@@ -108,16 +127,32 @@ export default function Page() {
           open={isAddBadgeModalOpen}
           onOpenChange={setIsAddBadgeModalOpen}
         >
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
-              <Plus className="h-4 w-4" /> Add Badge
-            </Button>
-          </DialogTrigger>
+          <Button
+            className="flex items-center gap-2"
+            onClick={() => {
+              setEditBadge(false);
+              setNewBadge({
+                name: '',
+                description: '',
+                image: '',
+                rule: 'TestDate1Year',
+                id: badges.length + 1
+              });
+              setIsAddBadgeModalOpen(true);
+            }}
+          >
+            <Plus className="h-4 w-4" /> {'Add Badge'}
+          </Button>
+
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add New Badge</DialogTitle>
+              <DialogTitle>
+                {editBadge ? 'Edit Badge' : 'Add New Badge'}
+              </DialogTitle>
               <DialogDescription>
-                Fill in the details to create a new badge
+                {editBadge
+                  ? 'Update the details of the badge'
+                  : 'Fill in the details to create a new badge'}
               </DialogDescription>
             </DialogHeader>
             <div className="mt-4 space-y-4">
@@ -205,8 +240,11 @@ export default function Page() {
                   </Avatar>
                 </div>
               )}
-              <Button onClick={handleAddBadge} className="w-full">
-                Add Badge
+              <Button
+                onClick={editBadge ? handleEditBadge : handleAddBadge}
+                className="w-full"
+              >
+                {editBadge ? 'Update Badge' : 'Add Badge'}
               </Button>
             </div>
           </DialogContent>
@@ -239,9 +277,14 @@ export default function Page() {
               </TableCell>
               <TableCell>
                 <div className="flex space-x-2">
+                  <Button size="icon" onClick={() => openEditBadgeModal(badge)}>
+                    <Edit className="h-4 w-4" />
+                    <span className="sr-only">Edit</span>
+                  </Button>
+
                   <div>
                     <Button
-                      variant="default"
+                      variant="outline"
                       size="icon"
                       onClick={() => {
                         setIsAssignBadgeModalOpen(true);
