@@ -25,12 +25,20 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Trash2, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 type Badge = {
   id: number;
   name: string;
   description: string;
   image: string;
+  rule: string;
 };
 
 type User = {
@@ -45,13 +53,15 @@ export default function Page() {
       id: 1,
       name: 'Gold Member',
       description: 'Awarded to members with 5 years of continuous membership',
-      image: '/placeholder.svg?height=100&width=100'
+      image: '/placeholder.svg?height=100&width=100',
+      rule: 'TestDate1Year'
     },
     {
       id: 2,
       name: 'Event Organizer',
       description: 'For members who have organized 3 or more club events',
-      image: '/placeholder.svg?height=100&width=100'
+      image: '/placeholder.svg?height=100&width=100',
+      rule: 'TestDate1Year'
     }
   ]);
 
@@ -66,7 +76,8 @@ export default function Page() {
   const [newBadge, setNewBadge] = useState<Omit<Badge, 'id' | 'usersCount'>>({
     name: '',
     description: '',
-    image: ''
+    image: '',
+    rule: 'TestDate1Year'
   });
   const [isAddBadgeModalOpen, setIsAddBadgeModalOpen] = useState(false);
   const [isAssignBadgeModalOpen, setIsAssignBadgeModalOpen] = useState(false);
@@ -77,7 +88,7 @@ export default function Page() {
       id: badges.length + 1
     };
     setBadges([...badges, newBadgeWithId]);
-    setNewBadge({ name: '', description: '', image: '' });
+    setNewBadge({ name: '', description: '', image: '', rule: '' });
     setIsAddBadgeModalOpen(false);
   };
 
@@ -129,6 +140,22 @@ export default function Page() {
                     setNewBadge({ ...newBadge, description: e.target.value })
                   }
                 />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="badge-rule">Rule</Label>
+                <Select value={newBadge.rule}>
+                  <SelectTrigger className="flex-1">
+                    <SelectValue defaultValue={'TestDate1Year'} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="TestDate1Year">
+                      <span>TestDate1Year</span>
+                    </SelectItem>
+                    <SelectItem value="TestDate2Year">
+                      <span>TestDate2Year</span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="badge-image">Badge Image</Label>
